@@ -1,0 +1,56 @@
+﻿@page "/challengedayone"
+@inject HttpClient _client
+
+<h3>ChallengeDayOne</h3>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="form-group-sm">
+                <blockquote class="blockquote text-center">
+                    <p class="mb-0">Input</p>
+                </blockquote>
+                <textarea rows="@totalRows" @bind="loadedFile" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <br />
+            <button type="button" class="btn btn-success">Run</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@code {
+
+    private string loadedFile;
+    private int totalRows = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var byteOfTheFile = await _client.GetStreamAsync("challenges-data/day_one.txt");
+        var numbers = new List<int>();
+
+        using (StreamReader reader = new StreamReader(byteOfTheFile))
+        {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                numbers.Add(Convert.ToInt32(line));
+                totalRows++;
+            }
+
+            reader.DiscardBufferedData();
+            reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+            loadedFile = await reader.ReadToEndAsync();
+        }
+
+
+    }
+
+
+}
