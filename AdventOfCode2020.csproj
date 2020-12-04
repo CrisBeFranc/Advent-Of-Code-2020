@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\challenges-data\day_four.txt" />
+    <Content Remove="wwwroot\challenges-data\day_tree.txt" />
+    <Content Remove="wwwroot\challenges-data\day_two.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0" PrivateAssets="all" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
@@ -15,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\challenges-data\day_four.txt" />
+    <None Include="wwwroot\challenges-data\day_tree.txt" />
+    <None Include="wwwroot\challenges-data\day_two.txt" />
     <None Include="wwwroot\challenges-data\day_one.txt" />
   </ItemGroup>
 
