@@ -1,0 +1,43 @@
+
+@if (showResult)
+{
+    @if (ResultNumber == 1)
+    {
+        <div class="alert alert-secondary mt-4" role="alert">
+            <span class="oi oi-star mr-2" aria-hidden="true"></span>
+            <strong>Result @ResultNumber </strong>
+            <br />
+            <span> The highest seat ID on a boarding pass: @Result</span>
+
+        </div>
+    }
+
+    @if (ResultNumber == 2)
+    {
+        <div class="alert alert-secondary mt-4" role="alert">
+            <span class="oi oi-star mr-2" aria-hidden="true"></span>
+            <strong>Result @ResultNumber </strong>
+            <br />
+            <span> The ID of your seat: @Result</span>
+
+        </div>
+    }
+}
+
+
+
+@code {
+
+    [Parameter]
+    public int Result { get; set; }
+    [Parameter]
+    public int ResultNumber { get; set; }
+
+    private bool showResult = false;
+
+    public void Show()
+    {
+        showResult = true;
+    }
+
+}

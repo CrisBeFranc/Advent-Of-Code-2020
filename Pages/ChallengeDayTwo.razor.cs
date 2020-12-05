@@ -1,28 +1,30 @@
 ﻿using AdventOfCode2020.Challenges;
 using AdventOfCode2020.Models;
 using AdventOfCode2020.Results;
+using AdventOfCode2020.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AdventOfCode2020.Pages
 {
-    public partial class ChallengeDayOne
+    public partial class ChallengeDayTwo
     {
 
         public string _loadedFile;
-        private List<int> _expenseReport;
-        private ValidEntries _partOne;
-        private ValidEntries _partTwo;
-        private int sumNumber = 2020;
+        private List<Password> _passwords;
+        private Regex regexLetter = new Regex(@"([\w]{1}[\:])");
+        private int _partOne;
+        private int _partTwo;
         private bool invalid = false;
         private bool changedBox = false;
 
-        ResultsDayOne childOne;
-        ResultsDayOne childTwo;
+        ResultsDayTwo childOne;
+        ResultsDayTwo childTwo;
 
         public string ExpenseReport
         {
@@ -36,15 +38,22 @@ namespace AdventOfCode2020.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            var byteOfTheFile = await _client.GetStreamAsync("challenges-data/day_one.txt");
-            _expenseReport = new List<int>();
+            var byteOfTheFile = await _client.GetStreamAsync("challenges-data/day_two.txt");
+            _passwords = new List<Password>();            
 
             using (StreamReader reader = new StreamReader(byteOfTheFile, Encoding.Unicode))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    _expenseReport.Add(Convert.ToInt32(line));
+                    string[] digits = regexLetter.Split(line);
+                    _passwords.Add(new Password
+                    {
+                        FindingLetter = digits[1].Split(":")[0],
+                        MinValue = int.Parse(digits[0].Split("-")[0]),
+                        MaxValue = int.Parse(digits[0].Split("-")[1]),
+                        Pass = digits[2].Trim()
+                    });
                 }
 
                 reader.DiscardBufferedData();
@@ -68,7 +77,7 @@ namespace AdventOfCode2020.Pages
             if (_loadedFile != null)
             {
                 Stream newReport = new MemoryStream(Encoding.UTF8.GetBytes(_loadedFile));
-                _expenseReport = new List<int>();
+                _passwords = new List<Password>();
 
                 using (StreamReader reader = new StreamReader(newReport))
                 {
@@ -76,8 +85,16 @@ namespace AdventOfCode2020.Pages
                     while ((line = await reader.ReadLineAsync()) != null)
                     {
                         if (!string.IsNullOrWhiteSpace(line))
-                            _expenseReport.Add(Convert.ToInt32(line));
-
+                        {
+                            string[] digits = regexLetter.Split(line);
+                            _passwords.Add(new Password
+                            {
+                                FindingLetter = digits[1].Split(":")[0],
+                                MinValue = int.Parse(digits[0].Split("-")[0]),
+                                MaxValue = int.Parse(digits[0].Split("-")[1]),
+                                Pass = digits[2].Trim()
+                            });
+                        }   
                     }
                 }
             }
@@ -89,20 +106,20 @@ namespace AdventOfCode2020.Pages
             if (ValidateTextbox())
             {
                 invalid = false;
-                DayOne _challengeSolver = new DayOne(sumNumber);
+                DayTwo _challengeSolver = new DayTwo();
 
-                _partOne = new ValidEntries();
-                _partTwo = new ValidEntries();
+                _partOne = 0;
+                _partTwo = 0;
 
                 await RefreshReport();
 
-                if (_expenseReport.Count > 0)
+                if (_passwords.Count > 0)
                 {
-                    _partOne = _challengeSolver.PartOne(_expenseReport);
-                    _partTwo = _challengeSolver.PartTwo(_expenseReport);
+                    _partOne = _challengeSolver.PartOne(_passwords);
+                    _partTwo = _challengeSolver.PartTwo(_passwords);
                 }
 
-                if (_partOne != null && _partTwo != null)
+                if (_partOne != 0 && _partTwo != 0)
                 {
                     childOne.Show();
                     childTwo.Show();

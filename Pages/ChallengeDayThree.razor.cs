@@ -4,47 +4,39 @@ using AdventOfCode2020.Results;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AdventOfCode2020.Pages
 {
-    public partial class ChallengeDayOne
+    public partial class ChallengeDayThree
     {
 
         public string _loadedFile;
-        private List<int> _expenseReport;
-        private ValidEntries _partOne;
-        private ValidEntries _partTwo;
-        private int sumNumber = 2020;
+        private List<string> _forestMap;
+        private List<Slope> _slopeConfigurations = new List<Slope>();
+        int _right = 1;
+        int _down = 1;
+        long _productResult = 0;
+
         private bool invalid = false;
         private bool changedBox = false;
 
-        ResultsDayOne childOne;
-        ResultsDayOne childTwo;
-
-        public string ExpenseReport
-        {
-            get { return _loadedFile; }
-            set
-            {
-                _loadedFile = value;
-                changedBox = true;
-            }
-        }
+        ResultsDayThree _child;  
 
         protected override async Task OnInitializedAsync()
         {
-            var byteOfTheFile = await _client.GetStreamAsync("challenges-data/day_one.txt");
-            _expenseReport = new List<int>();
+            var byteOfTheFile = await _client.GetStreamAsync("challenges-data/day_three.txt");
+            _forestMap = new List<string>();
 
             using (StreamReader reader = new StreamReader(byteOfTheFile, Encoding.Unicode))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    _expenseReport.Add(Convert.ToInt32(line));
+                    _forestMap.Add(line);
                 }
 
                 reader.DiscardBufferedData();
@@ -58,17 +50,17 @@ namespace AdventOfCode2020.Pages
             if (changedBox)
             {
                 string fix = new string(_loadedFile.Replace("\n", string.Empty));
-                return Regex.IsMatch(fix.Trim(), @"^[0-9]+$");
+                return Regex.IsMatch(fix.Trim(), @"^[\.]+[\#]+$");
             }
             return true;
         }
 
-        protected async Task RefreshReport()
+        protected async Task RefreshSlopesMap()
         {
             if (_loadedFile != null)
             {
                 Stream newReport = new MemoryStream(Encoding.UTF8.GetBytes(_loadedFile));
-                _expenseReport = new List<int>();
+                _forestMap = new List<string>();
 
                 using (StreamReader reader = new StreamReader(newReport))
                 {
@@ -76,42 +68,63 @@ namespace AdventOfCode2020.Pages
                     while ((line = await reader.ReadLineAsync()) != null)
                     {
                         if (!string.IsNullOrWhiteSpace(line))
-                            _expenseReport.Add(Convert.ToInt32(line));
-
+                            _forestMap.Add(line);
                     }
                 }
             }
         }
 
-        protected async Task ShowResults()
+        protected void AddSlope()
+        {
+            if (_right < 1 || _down < 1)
+            {
+                invalid = true;
+            }
+            else
+            {
+                invalid = false;
+                _slopeConfigurations.Add(new Slope
+                {
+                    StartPosition = _right + 1,
+                    Move = _right,
+                    Jumps = _down
+                });
+            }
+        }
+
+        protected void RemoveSlope(Slope toRemove)
+        {
+            _slopeConfigurations.Remove(toRemove);
+        }
+
+
+        protected async Task ShowResult()
         {
 
             if (ValidateTextbox())
             {
                 invalid = false;
-                DayOne _challengeSolver = new DayOne(sumNumber);
+                DayThree _challengeSolver = new DayThree();
 
-                _partOne = new ValidEntries();
-                _partTwo = new ValidEntries();
+                await RefreshSlopesMap();
 
-                await RefreshReport();
-
-                if (_expenseReport.Count > 0)
+                _slopeConfigurations.ForEach(sc =>
                 {
-                    _partOne = _challengeSolver.PartOne(_expenseReport);
-                    _partTwo = _challengeSolver.PartTwo(_expenseReport);
-                }
+                    sc.EncounteredTrees = _challengeSolver.CalculateSlopes(sc.StartPosition, sc.Move, sc.Jumps, _forestMap);
+                });
 
-                if (_partOne != null && _partTwo != null)
+                if(_slopeConfigurations.Select(s => s.EncounteredTrees).Any(r => r > 1))
                 {
-                    childOne.Show();
-                    childTwo.Show();
+                    double result = _slopeConfigurations
+                        .Select(s => s.EncounteredTrees).Aggregate(1.0, (acc, c) => (acc * c));
+
+                    _productResult = Convert.ToInt64(result);
+                    _child.Show();
                 }
                 else
                 {
                     invalid = true;
-                }
-
+                }  
             }
             else
             {

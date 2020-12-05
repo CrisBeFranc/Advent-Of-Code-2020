@@ -1,30 +1,149 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">AdventOfCode2020</a>
+    <a class="navbar-brand" href="">Advent Of Code 2020</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+<div class="@NavMenuCssClass scrollbar" id="style-4" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-task" aria-hidden="true"></span> Home
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Information
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="challengedayone" >
-                <span class="oi oi-task" aria-hidden="true"></span> Day One
+            <NavLink class="nav-link" href="challengedayone">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 1
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="challengedaytwo">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 2
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            <NavLink class="nav-link" href="challengedaythree">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 3
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayfour">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 4
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayfive">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 5
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaysix">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 6
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayseven">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 7
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayeight">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 8
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaynine">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 9
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayten">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 10
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayeleven">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 11
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaytwelve">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 12
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaythirteen">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 13
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayfourteenth">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 14
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayfifteen">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 15
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaysixteen">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 16
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayseventeen">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 17
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedayeighteen">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 18
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaynineteen">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 19
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaytwenty">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 20
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaytwentyone">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 21
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaytwentytwo">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 22
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaytwentythree">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 23
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaytwentyfour">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 24
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="challengedaytwentyfive">
+                <span class="oi oi-task" aria-hidden="true"></span> Day 25
             </NavLink>
         </li>
     </ul>

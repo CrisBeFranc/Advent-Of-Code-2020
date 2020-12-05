@@ -5,9 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\challenges-data\day_five.txt" />
     <Content Remove="wwwroot\challenges-data\day_four.txt" />
-    <Content Remove="wwwroot\challenges-data\day_tree.txt" />
+    <Content Remove="wwwroot\challenges-data\day_three.txt" />
     <Content Remove="wwwroot\challenges-data\day_two.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\Index.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\Index.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +27,8 @@
 
   <ItemGroup>
     <None Include="wwwroot\challenges-data\day_four.txt" />
-    <None Include="wwwroot\challenges-data\day_tree.txt" />
+    <None Include="wwwroot\challenges-data\day_five.txt" />
+    <None Include="wwwroot\challenges-data\day_three.txt" />
     <None Include="wwwroot\challenges-data\day_two.txt" />
     <None Include="wwwroot\challenges-data\day_one.txt" />
   </ItemGroup>

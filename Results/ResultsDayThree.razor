@@ -1,0 +1,29 @@
+
+@if (showResult)
+{    
+         <div class="alert alert-secondary mt-4" role="alert">
+            <span class="oi oi-star mr-2" aria-hidden="true"></span>
+            <strong>Multiplication of Encountered Trees</strong>
+            <br />
+
+            <span> With Complex Policies</span>
+            <br />
+            <span> @Result </span>
+        </div>    
+}
+
+
+@code {
+
+    [Parameter]
+    public long Result { get; set; }
+    
+
+    private bool showResult = false;
+
+    public void Show()
+    {
+        showResult = true;
+    }
+
+}

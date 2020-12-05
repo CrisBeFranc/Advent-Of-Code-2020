@@ -1,0 +1,37 @@
+﻿@page "/challengedaytwo"
+@inject HttpClient _client
+
+
+<h3 class="text-center">--- Day 2: Password Philosophy ---</h3>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="form-group-sm">
+                <blockquote class="blockquote text-center">
+                    <p class="mb-0">Input</p>
+                </blockquote>
+                <textarea rows="30" @bind="_loadedFile" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <br />
+            <div class="row">
+                <button type="button" @onclick="@(async () => await ShowResults())" class="btn btn-success">Run</button>            
+            </div>
+            <br />
+            <ResultsDayTwo @ref="childOne" Result="@_partOne" ResultNumber="1"></ResultsDayTwo>
+            <ResultsDayTwo @ref="childTwo" Result="@_partTwo" ResultNumber="2"></ResultsDayTwo>
+            @if (invalid)
+            {
+                <div class="alert alert-danger">
+                    <strong>Check out!</strong> Input data is not valid.
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<br />
+<br />

@@ -1,0 +1,81 @@
+﻿@page "/challengedaythree"
+@inject HttpClient _client
+
+
+<h3 class="text-center">--- Day 3: Toboggan Trajectory ---</h3>
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-7">
+            <div class="form-group-sm">
+                <blockquote class="blockquote text-center">
+                    <p class="mb-0">Input</p>
+                </blockquote>
+                <textarea rows="30" @bind="_loadedFile" class="form-control"></textarea>
+            </div>
+        </div>
+
+        <div class="col-sm-5">
+            <br />
+            <div class="row">
+                <div class="col-sm-2">
+                    <button type="button" @onclick="@(async () => await ShowResult())" class="btn btn-success">Run</button>
+                </div>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Right</span>
+                                </div>
+                                <input @bind-value="_right" type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Down</span>
+                                </div>
+                                <input @bind-value="_down" type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <button @onclick="@AddSlope" class="btn btn-primary">
+                                <span class="oi oi-plus" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            @if (_slopeConfigurations.Any())
+            {
+                <div class="alert alert-secondary mt-4" role="alert">
+                    <span class="oi oi-project mr-2" aria-hidden="true"></span>
+                    <strong>Slope Configurations</strong>
+                    <br />
+                    <br />
+                    @foreach (var slope in _slopeConfigurations)
+                    {
+                        <button  @onclick="@(e => RemoveSlope(slope))" class="badge badge-danger">X</button><span> Right: @slope.Move , Down: @slope.Jumps</span>
+                        <br />
+                    }
+                </div>
+            }
+
+            <ResultsDayThree @ref="_child" Result="@_productResult"></ResultsDayThree>
+                
+            @if (invalid)
+            {
+                <div class="alert alert-danger">
+                    <strong>Check out!</strong> Input data is not valid.
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<br />
+<br />
