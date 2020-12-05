@@ -1,7 +1,5 @@
 ﻿using AdventOfCode2020.Challenges;
-using AdventOfCode2020.Models;
 using AdventOfCode2020.Results;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -10,41 +8,42 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2020.Pages
 {
-    public partial class ChallengeDayOne
+    public partial class ChallengeDayFour
     {
 
         public string _loadedFile;
-        private List<int> _expenseReport;
-        private ValidEntries _partOne;
-        private ValidEntries _partTwo;
-        private int sumNumber = 2020;
+        private List<string> _passports;
+        private int partOne = 0;
+        private int partTwo = 0;        
+
         private bool invalid = false;
         private bool changedBox = false;
 
-        ResultsDayOne childOne;
-        ResultsDayOne childTwo;
+        ResultsDayFour childOne;
+        ResultsDayFour childTwo;
 
-        public string ExpenseReport
-        {
-            get { return _loadedFile; }
-            set
-            {
-                _loadedFile = value;
-                changedBox = true;
-            }
-        }
 
         protected override async Task OnInitializedAsync()
         {
-            var byteOfTheFile = await _client.GetStreamAsync("challenges-data/day_one.txt");
-            _expenseReport = new List<int>();
+            var byteOfTheFile = await _client.GetStreamAsync("challenges-data/day_four.txt");
+            _passports = new List<string>();
 
             using (StreamReader reader = new StreamReader(byteOfTheFile, Encoding.Unicode))
             {
                 string line;
+                string userDetails = string.Empty;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    _expenseReport.Add(Convert.ToInt32(line));
+                    line = line.Trim();
+                    if (line == string.Empty)
+                    {
+                        _passports.Add(userDetails);
+                        userDetails = string.Empty;
+                    }
+                    else
+                    {
+                        userDetails = $"{line} {userDetails}";
+                    }
                 }
 
                 reader.DiscardBufferedData();
@@ -63,22 +62,30 @@ namespace AdventOfCode2020.Pages
             return true;
         }
 
-        protected async Task RefreshReport()
+        protected async Task RefreshPassports()
         {
             if (_loadedFile != null)
             {
                 Stream newReport = new MemoryStream(Encoding.UTF8.GetBytes(_loadedFile));
-                _expenseReport = new List<int>();
+                _passports = new List<string>();
 
                 using (StreamReader reader = new StreamReader(newReport))
                 {
                     string line;
+                    string userDetails = string.Empty;
                     while ((line = await reader.ReadLineAsync()) != null)
                     {
-                        if (!string.IsNullOrWhiteSpace(line))
-                            _expenseReport.Add(Convert.ToInt32(line));
-
-                    }
+                        line = line.Trim();
+                        if (line == string.Empty)
+                        {
+                            _passports.Add(userDetails);
+                            userDetails = string.Empty;
+                        }
+                        else
+                        {
+                            userDetails = $"{line} {userDetails}";
+                        }
+                    }                    
                 }
             }
         }
@@ -89,20 +96,17 @@ namespace AdventOfCode2020.Pages
             if (ValidateTextbox())
             {
                 invalid = false;
-                DayOne _challengeSolver = new DayOne(sumNumber);
+                DayFour _challengeSolver = new DayFour();                              
 
-                _partOne = new ValidEntries();
-                _partTwo = new ValidEntries();
+                await RefreshPassports();
 
-                await RefreshReport();
-
-                if (_expenseReport.Count > 0)
+                if (_passports.Count > 0)
                 {
-                    _partOne = _challengeSolver.PartOne(_expenseReport);
-                    _partTwo = _challengeSolver.PartTwo(_expenseReport);
+                    partOne = _challengeSolver.PartOne(_passports);
+                    partTwo = _challengeSolver.PartTwo(_passports);
                 }
 
-                if (_partOne != null && _partTwo != null)
+                if (partOne != 0 && partTwo != 0)
                 {
                     childOne.Show();
                     childTwo.Show();
@@ -111,7 +115,6 @@ namespace AdventOfCode2020.Pages
                 {
                     invalid = true;
                 }
-
             }
             else
             {
