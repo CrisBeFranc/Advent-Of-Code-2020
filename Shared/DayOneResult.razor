@@ -1,0 +1,46 @@
+
+@if (showResult)
+{
+    @if (Result.ValidEntryThree == -99)
+    {
+        <div class="alert alert-secondary mt-4" role="alert">
+            <span class="oi oi-star mr-2" aria-hidden="true"></span>
+            <strong>Result @ResultNumber </strong>
+            <br />
+
+            <span> The Two numbers are: [@Result.ValidEntryOne , @Result.ValidEntryTwo]</span>
+            <br />
+            <span> If you multiply them together: @Result.ValidEntryProduct </span>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-secondary mt-4" role="alert">
+            <span class="oi oi-star mr-2" aria-hidden="true"></span>
+            <strong>Result @ResultNumber </strong>
+            <br />
+
+            <span> The Two numbers are: [@Result.ValidEntryOne , @Result.ValidEntryTwo, @Result.ValidEntryThree]</span>
+            <br />
+            <span> If you multiply them together: @Result.ValidEntryProduct </span>
+        </div>
+    }
+}
+
+
+
+@code {
+
+    [Parameter]
+    public ValidEntries Result { get; set; }
+    [Parameter]
+    public int ResultNumber { get; set; }
+
+    private bool showResult = false;
+
+    public void Show()
+    {
+        showResult = true;
+    }
+
+}

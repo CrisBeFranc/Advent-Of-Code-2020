@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\challenges-data\day_four.txt" />
     <None Include="wwwroot\challenges-data\day_tree.txt" />
     <None Include="wwwroot\challenges-data\day_two.txt" />
