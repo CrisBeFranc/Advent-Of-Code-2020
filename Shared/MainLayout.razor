@@ -1,17 +1,46 @@
 @inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@inject IWebAssemblyHostEnvironment hostEnv
 
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
+    <!-- Main -->
     <div class="main">
         @*<div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-        </div>*@
+                <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+            </div>*@
 
         <div class="content px-4">
             @Body
         </div>
     </div>
+    <!-- Main -->
+
+
 </div>
+
+<!-- Footer -->
+<footer class="page-footer font-small blue footer">
+    @if (hostEnv.IsDevelopment())
+    {
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            © 2020 Copyright:
+            <a href="https://github.com/CamiloBenavides"> You Are In Development</a>
+        </div>
+        <!-- Copyright -->
+    }
+    else
+    {
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            2020 Copyright:
+            <a href="https://github.com/CamiloBenavides"> Cristian Benavides-Franco</a>
+        </div>
+        <!-- Copyright -->
+    }
+</footer>
+<!-- Footer -->
