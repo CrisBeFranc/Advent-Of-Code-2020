@@ -3,24 +3,35 @@ on: push
 
 jobs:
   build:
+    # use ubuntu-latest image to run steps on
     runs-on: ubuntu-latest
     env:
       DOTNET_NOLOGO: true
 
     steps:
+      # uses GitHub's checkout action to checkout code form the master branch
       - uses: actions/checkout@v2
-      
+      # sets up .NET Core SDK 5.0
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
-      
+      # Run Tests - If any
       - name: Test
         run: dotnet test
-      
+      # publishes Blazor project to the release-folder
       - name: Publish
-        run: dotnet publish AdventOfCode2020.csproj --configuration Release
-      
+        run: dotnet publish AdventOfCode2020.csproj -c Release -o release --nologo      
+      # changes the base-tag in index.html from '/' to 'AdventOfCode2020' to match GitHub Pages repository subdirectory
+      - name: Change base-tag in index.html from / to AdventOfCode2020
+      run: sed -i 's/<base href="\/" \/>/<base href="\/AdventOfCode2020\/" \/>/g' release/wwwroot/index.html
+      # copy index.html to 404.html to serve the same file when a file is not found
+      - name: copy index.html to 404.html
+      run: cp release/wwwroot/index.html release/wwwroot/404.html
+      # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
+      - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
+      # Publish to GH 
       - name: GitHub Pages action
         if: ${{ github.ref == 'refs/heads/main' }} # Publish only when the push is on master
         uses: peaceiris/actions-gh-pages@v3.6.1
