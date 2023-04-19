@@ -24,7 +24,7 @@ jobs:
         run: dotnet publish AdventOfCode2020.csproj -c Release -o release --nologo      
       # changes the base-tag in index.html from '/' to 'AdventOfCode2020' to match GitHub Pages repository subdirectory
       - name: Change base-tag in index.html from / to AdventOfCode2020
-        run: sed -i 's/<base href="\/" \/>/<base href="\/AdventOfCode2020\/" \/>/g' release/wwwroot/index.html
+        run: sed -i 's/<base href="\/" \/>/<base href="\/Advent-Of-Code-2020\/" \/>/g' release/wwwroot/index.html
       # copy index.html to 404.html to serve the same file when a file is not found
       - name: copy index.html to 404.html
         run: cp release/wwwroot/index.html release/wwwroot/404.html
